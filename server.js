@@ -1,6 +1,9 @@
 //importing express dependencies
 const express = require("express");
 const app = express();
+app.use("/", (req, res) => {
+  res.send("<h2> Lets chat a while ... ;) </h1> ");
+});
 
 // For POST-Support
 let bodyParser = require("body-parser");
