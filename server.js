@@ -20,13 +20,10 @@ app.use("/api", routes);
 
 //mongo db database connection
 const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://root:root@cluster0.m4mka.mongodb.net/guffgaff?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.DATABASE || "mongodb://localhost/guffgaff", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
