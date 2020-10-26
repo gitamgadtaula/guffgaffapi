@@ -49,7 +49,6 @@ module.exports.login = async (req, res) => {
           id: user.id,
         },
       };
-
       jwt.sign(payload, "auth_token", { expiresIn: 360000 }, (err, token) => {
         if (err) throw err;
         res.status(200).json({ token: token });
@@ -89,6 +88,6 @@ module.exports.me = async (req, res) => {
     const user = await User.findById(req.user.id);
     res.json(user);
   } catch (e) {
-    res.send({ message: "Error in Fetching user" });
+    res.status(401).send({ message: "Error in Fetching user" });
   }
 };
