@@ -55,7 +55,7 @@ module.exports.login = async (req, res) => {
         res.status(200).json({ token: token });
       });
     } else {
-      return res.json({ msg: "Invalid credentials" });
+      return res.status(401).json({ msg: "Invalid credentials" });
     }
   } catch (error) {
     return res.json(error);
