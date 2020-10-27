@@ -5,5 +5,6 @@ const roomSchema = new mongoose.Schema({
   users: { type: Array },
   messasges: { ref: "User" },
   created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
 });
 module.exports = mongoose.model("Room", roomSchema);

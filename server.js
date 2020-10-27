@@ -20,7 +20,7 @@ app.use("/api", routes);
 
 //mongo db database connection
 const mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE || "mongodb://localhost/guffgaff", {
+mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
