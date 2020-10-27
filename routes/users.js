@@ -5,7 +5,7 @@ var UserController = require("../controllers/UserController");
 var Auth = require("../middleware/Auth");
 
 // fetching the user model
-const User = require("../models/User");
+// const User = require("../models/User");
 
 // fetching all users
 router.get("/", UserController.getAll);

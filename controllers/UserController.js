@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 //get all users
@@ -24,7 +24,7 @@ module.exports.create = async (req, res) => {
     const newUser = await user.save();
     return res.status(200).json(newUser);
   } catch (error) {
-    return res.json(error);
+    return res.status(500).json(error);
   }
 };
 
