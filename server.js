@@ -33,6 +33,6 @@ db.once("open", () => console.log("connected to mongodb .."));
 
 //listen to the changes in the app
 app.listen(process.env.PORT, () =>
-  console.log("server running in http://localhost:3000/")
+  console.log(`server running in http://localhost:${process.env.PORT}/`)
 );
 module.exports = app;
