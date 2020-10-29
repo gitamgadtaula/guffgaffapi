@@ -2,27 +2,36 @@ const Room = require("../models/Room");
 const User = require("../models/User");
 
 module.exports.create = async (req, res) => {
-  //check if the recipent_id  exists
-  if (req.body.recipent_id != null) {
-    const room = new Room({
-      name: `${req.user.id}+chats+${(req.user, req.body.recipent_id)}`,
-      created_by: req.user.id,
-      users: [req.user.id, req.body.recipent_id],
-    });
+  const room = new Room({
+    name: `${req.user.id}+chats+${(req.user, req.user.recipient_id)}`,
+    created_by: req.user.id,
+    users: [req.user.id, req.body.recipient_id],
+  });
 
-    let recipent_user = await User.findById(req.body.recipent_id);
-    if (recipent_user != null) {
-      try {
-        const newRoom = await room.save();
-        return res.status(200).json(newRoom);
-      } catch (error) {
-        return res.json(error);
-      }
-    } else {
-      return res.status(404).send("no user found");
+  try {
+    const newRoom = await room.save();
+    return res.status(200).json(newRoom);
+  } catch (error) {
+    return res.json(error);
+  }
+};
+
+module.exports.findRoom = async (req, res) => {
+  var users = [req.user.id, req.body.recipient_id];
+  var users_rev = users.reverse();
+  if (req.body.recipient_id) {
+    try {
+      var room = await Room.findOne({
+        //return if matches all the array elements without specific given order
+        users: { $all: users },
+      });
+
+      res.send(room);
+    } catch (e) {
+      res.status(404).send("not found " + req.user.id);
     }
   } else {
-    res.status(400).send("send recipent id");
+    res.status(400).send("recipient id is needed");
   }
 };
 
