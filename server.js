@@ -31,6 +31,11 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("connected to mongodb .."));
 
+// enable files upload
+app.use(fileUpload({
+  createParentPath: true
+}));
+
 //listen to the changes in the app
 app.listen(process.env.PORT, () =>
   console.log(`server running in http://localhost:${process.env.PORT}/`)
