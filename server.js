@@ -2,14 +2,23 @@
 const express = require("express");
 const app = express();
 
+//for file upload
+const fileUpload = require('express-fileupload');
 // For POST-Support
 let bodyParser = require("body-parser");
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 // To accept json parameters
 app.use(express.json());
+
+// enable files upload
+app.use(fileUpload({
+  createParentPath: true
+}));
+// load the files that are in the public directory from the /static path prefix.
+app.use(express.static('public'))
 
 //for dotenv file usage
 require("dotenv").config();
@@ -30,11 +39,6 @@ mongoose.set("useCreateIndex", true);
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("connected to mongodb .."));
-
-// enable files upload
-app.use(fileUpload({
-  createParentPath: true
-}));
 
 //listen to the changes in the app
 app.listen(process.env.PORT, () =>

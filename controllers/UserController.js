@@ -14,17 +14,32 @@ module.exports.getAll = async function (req, res) {
 //create a user
 module.exports.create = async (req, res) => {
   // const salt = await bcrypt.genSalt(10);
-  const user = new User({
-    full_name: req.body.full_name,
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username,
-  });
-  try {
-    const newUser = await user.save();
-    return res.status(200).json(newUser);
-  } catch (error) {
-    return res.status(500).json(error);
+
+  if (!req.files) {
+    res.status(400).send({
+      status: false,
+      message: "No file uploaded",
+      body: req.body,
+    });
+  } else {
+    try {
+      let avatar = req.files.avatar;
+      avatar.mv(
+        "./public/users/" + req.body.username + "/images/" + avatar.name
+      );
+      const avatarPath = req.body.username + "/images/" + avatar.name;
+      const user = new User({
+        full_name: req.body.full_name,
+        email: req.body.email,
+        password: req.body.password,
+        username: req.body.username,
+        avatar: avatarPath,
+      });
+      const newUser = await user.save();
+      return res.status(200).json(newUser);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
   }
 };
 
