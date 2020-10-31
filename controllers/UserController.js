@@ -36,7 +36,9 @@ module.exports.create = async (req, res) => {
         avatar: avatarPath,
       });
       const newUser = await user.save();
-      return res.status(200).json(newUser);
+      return res
+        .status(200)
+        .json({ msg: "Successfully created user", user: newUser });
     } catch (error) {
       return res.status(500).json(error);
     }
