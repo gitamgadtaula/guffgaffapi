@@ -7,5 +7,6 @@ var Auth = require("../middleware/Auth");
 var Room = require("../middleware/Room");
 
 router.post("/create", Auth, Room, ChatController.create);
+router.get("/getall", Auth, ChatController.getAll);
 
 module.exports = router;
