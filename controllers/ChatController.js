@@ -73,12 +73,19 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.getAll = async (req, res) => {
-  await Chat.find()
+  await Chat.find({ room: req.room })
     // .populate("room")
     .then((messages) => {
+      const resPayload = messages.map((item, index) => {
+        return {
+          msg: item.message,
+          sender: item.sender,
+          date: item.created_at,
+        };
+      });
       res.status(200).json({
         success: true,
-        value: messages,
+        messages: resPayload,
       });
     });
 };
