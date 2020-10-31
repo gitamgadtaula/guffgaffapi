@@ -14,6 +14,6 @@ module.exports = async function (req, res, next) {
       res.status(404).send("no recipient user found");
     }
   } else {
-    res.status(500).send("No recipient id is sent");
+    res.status(500).json({ msg: "No recipient id is sent", payload: req.body });
   }
 };
