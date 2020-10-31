@@ -5,6 +5,8 @@ const Chat = require("../models/Chat");
 //Post chat message
 module.exports.create = async (req, res) => {
   // Check if message is empty
+  // const request = [req.user.id, req.body.recipient_id,req.body.message];
+  // return res.json(request);
   if (req.body.message == null) {
     return res.status(400).json({
       success: false,
@@ -68,4 +70,15 @@ module.exports.create = async (req, res) => {
       }
     }
   );
+};
+
+module.exports.getAll = async (req, res) => {
+  await Chat.find()
+    // .populate("room")
+    .then((messages) => {
+      res.status(200).json({
+        success: true,
+        value: messages,
+      });
+    });
 };
