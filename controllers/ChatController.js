@@ -75,6 +75,7 @@ module.exports.create = async (req, res) => {
 module.exports.getAll = async (req, res) => {
   await Chat.find({ room: req.room })
     .populate("sender")
+    .sort({ $natural: -1 })
     .then((messages) => {
       const resPayload = messages.map((item, index) => {
         return {
@@ -84,7 +85,7 @@ module.exports.getAll = async (req, res) => {
           username: item.sender.username,
           full_name: item.sender.full_name,
           sender: item.sender.id,
-          image:item.sender.avatar
+          image: item.sender.avatar,
         };
       });
       res.status(200).json({
