@@ -74,13 +74,17 @@ module.exports.create = async (req, res) => {
 
 module.exports.getAll = async (req, res) => {
   await Chat.find({ room: req.room })
-    // .populate("room")
+    .populate("sender")
     .then((messages) => {
       const resPayload = messages.map((item, index) => {
         return {
           msg: item.message,
-          sender: item.sender,
+          // sender: item.sender,
           date: item.created_at,
+          username: item.sender.username,
+          full_name: item.sender.full_name,
+          sender: item.sender.id,
+          image:item.sender.avatar
         };
       });
       res.status(200).json({
