@@ -62,8 +62,10 @@ var io = require("socket.io")(http, {
 //Whenever someone connects this gets executed
 io.on("connection", (socket) => {
   console.log("A user connected");
-  //Send a message after a timeout of 4seconds
+
   
+  //Send a message after a timeout of 4seconds
+
   // setTimeout(function () {
   //   socket.send("Sent a message 4 seconds after connection!");
   // }, 4000);
